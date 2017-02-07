@@ -5,7 +5,7 @@ events {
 http {
     {{ range jsonQuery .Env.CONFIG "servers" }}
     server {
-        server_name  {{ .ServerName }};
+        server_name {{ .ServerName }};
         listen 80;
         location / {
             proxy_set_header Host $host;
