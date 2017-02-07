@@ -9,4 +9,4 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
 
 ADD nginx.tmpl /etc/nginx/nginx.tmpl
 
-CMD dockerize -template /etc/nginx/nginx.tmpl:/etc/nginx/nginx.conf -stdout /var/log/nginx/access.log -stderr /var/log/nginx/error.log nginx
+CMD dockerize -template /etc/nginx/nginx.tmpl:/etc/nginx/nginx.conf && nginx
