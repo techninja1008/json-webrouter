@@ -1,0 +1,8 @@
+#!/bin/bash
+{{ range $k, $v := jsonQuery .Env.CONFIG "auth"}}
+cat << {{ upper $k }} > /auth/{{ $k }}
+{{ range $ka, $va := $v }}
+{{ $ka }}:{{ $va }}
+{{ end }}
+{{ upper $k }}
+{{ end }}
