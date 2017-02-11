@@ -8,7 +8,7 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
     && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-auto-ssl
-RUN mkdir /etc/resty-auto-ssl
+RUN mkdir /etc/resty-auto-ssl && chown www-data /etc/resty-auto-ssl
 RUN yes "" | openssl req -new -newkey rsa:2048 -days 3650 -nodes -x509 -subj '/CN=err-letsencrypt-has-failed' -keyout /fb.key -out fb.crt
 
 ADD nginx.tmpl /nginx.tmpl
