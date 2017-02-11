@@ -63,6 +63,7 @@ http {
             content_by_lua_block {
                 auto_ssl:challenge_server()
             }
+            auth_basic off;
         }
         {{ end }}
     }
