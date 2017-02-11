@@ -32,6 +32,11 @@ http {
     }
     {{ range jsonQuery .Env.CONFIG "servers" }}
     server {
+        {{ with .Auth }}
+        auth_basic {{ .Realm }};
+        auth_basic_file /auth/{{ .Set }};
+        {{ end }}
+    
         server_name {{ .ServerName }};
         listen 80;
         location / {
