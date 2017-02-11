@@ -12,5 +12,8 @@ RUN mkdir /etc/resty-auto-ssl && chown www-data /etc/resty-auto-ssl
 RUN yes "" | openssl req -new -newkey rsa:2048 -days 3650 -nodes -x509 -subj '/CN=err-letsencrypt-has-failed' -keyout /fb.key -out fb.crt
 
 ADD nginx.tmpl /nginx.tmpl
+ADD auth.tmpl /auth.tmpl
 
-ENTRYPOINT dockerize -template /nginx.tmpl:/usr/local/openresty/nginx/conf/nginx.conf && /usr/local/openresty/bin/openresty
+RUN mkdir /auth
+
+ENTRYPOINT dockerize -template /nginx.tmpl:/usr/local/openresty/nginx/conf/nginx.conf -template /auth.tmpl:/auth.sh && chmod +x /auth.sh && /auth.sh && /usr/local/openresty/bin/openresty
