@@ -82,6 +82,9 @@ http {
         }
         ssl_certificate /fb.crt;
         ssl_certificate_key /fb.key;
+        ssl_certificate_by_lua_block {
+            auto_ssl:ssl_certificate()
+        }
     }
     {{ end }}
     {{ end }}
