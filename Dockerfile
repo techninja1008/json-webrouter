@@ -1,4 +1,4 @@
-FROM nginx
+FROM openresty/openresty:xenial
 
 RUN apt-get update && apt-get install -y wget
 
@@ -7,6 +7,9 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-ADD nginx.tmpl /etc/nginx/nginx.tmpl
+RUN luarocks install lua-resty-auto-ssl
+RUN mkdir /etc/resty-auto-ssl
 
-CMD dockerize -template /etc/nginx/nginx.tmpl:/etc/nginx/nginx.conf && nginx
+ADD nginx.tmpl /nginx.tmpl
+
+ENTRYPOINT dockerize -template /nginx.tmpl:/usr/local/openresty/nginx/conf/nginx.conf && /usr/local/openresty/bin/openresty
