@@ -30,6 +30,13 @@ http {
             }
         }
     }
+    
+    {{ with jsonQuery .Env.CONFIG "globals" }}
+    {{ with .MaxBodySize }}
+    client_max_body_size {{ .MaxBodySize }};
+    {{ end }}
+    {{ end }}
+    
     {{ range jsonQuery .Env.CONFIG "servers" }}
     server {
         {{ with .Auth }}
