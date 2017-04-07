@@ -33,7 +33,7 @@ http {
     
     {{ with jsonQuery .Env.CONFIG "globals" }}
     {{ with .MaxBodySize }}
-    client_max_body_size {{ .MaxBodySize }};
+    client_max_body_size {{ . }};
     {{ end }}
     {{ end }}
     
