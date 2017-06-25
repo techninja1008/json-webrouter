@@ -76,6 +76,11 @@ http {
     }
     {{ if .Https }}
     server {
+        {{ with .Auth }}
+        auth_basic {{ .Realm }};
+        auth_basic_user_file /auth/{{ .Set }};
+        {{ end }}
+        
         server_name {{ .ServerName }};
         listen 443 ssl;
         location / {
